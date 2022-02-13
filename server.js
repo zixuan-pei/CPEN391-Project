@@ -9,7 +9,14 @@ const mongodbName = "cpen322-messenger";
 const db = new Database(mongodbUrl, mongodbName);
 
 app.get('/', (req, res) => {
-    res.send(JSON.stringify(db));
+    db.getData().then(data => {
+        console.log(data);
+        res.send(data);
+    }).catch(err => {
+        console.log(err);
+        res.send(err);
+    });
+    
 });
 
 
