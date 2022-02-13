@@ -10,6 +10,7 @@ const app = express();
 const db = new Database(mongodbUrl, mongodbName);
 
 const testData = {
+    _id: 'testdata',
     time: 1,
     co2: 100,
     people: 10
@@ -27,6 +28,7 @@ app.get('/addData', (req, res) => {
 });
 
 app.get('/', (req, res) => {
+    console.log(testData);
     db.addData(JSON.stringify(testData)).then(data => {
         console.log(data);
         res.send(data);
