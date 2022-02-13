@@ -29,7 +29,7 @@ app.get('/addData', (req, res) => {
 
 app.get('/', (req, res) => {
     console.log(testData);
-    db.addData(JSON.stringify(testData)).then(data => {
+    db.addData(testData).then(data => {
         console.log(data);
         res.send(data);
     }).catch(err => {
