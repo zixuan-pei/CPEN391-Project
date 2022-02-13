@@ -31,12 +31,23 @@ function Database(mongoUrl, dbName){
 Database.prototype.getData = function(){
     return this.connected.then(db =>
         new Promise((resolve, reject) => {
-            db.collection('chatrooms').find({}).toArray((err, data) => {
+            db.collection('hello').find({}).toArray((err, data) => {
                 if (err)
                     reject(err);
                 else
                     resolve(data);
             })
+        })
+    )
+}
+
+Database.prototype.addData = function(data){
+    return this.connected.then(db =>
+        new Promise((resolve, reject) => {
+            db.collection("hello").insertOne(data, function (err) {
+                if (err) reject(err);
+                else resolve(data);
+            });
         })
     )
 }
