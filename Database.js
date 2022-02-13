@@ -44,7 +44,7 @@ Database.prototype.getData = function(){
 Database.prototype.addData = function(data){
     return this.connected.then(db =>
         new Promise((resolve, reject) => {
-            db.collection("hello").insertOne(data, function (err) {
+            db.collection('hello').insertOne(data, function (err) {
                 if (err) reject(err);
                 else resolve(data);
             });

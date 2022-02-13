@@ -15,7 +15,7 @@ const testData = {
     people: 10
 }
 
-app.get('/', (req, res) => {
+app.get('/addData', (req, res) => {
     db.getData().then(data => {
         console.log(data);
         res.send(data);
@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
     
 });
 
-app.get('/addData', (req, res) => {
+app.get('/', (req, res) => {
     db.addData(JSON.stringify(testData)).then(data => {
         console.log(data);
         res.send(data);
