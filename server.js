@@ -16,6 +16,8 @@ const testData = {
     people: 10
 }
 
+app.use(express.json());
+
 app.get('/', (req, res) => {
     res.send("Please add /addData or /getData after URL for testing.\n This is the dummy main page doing nothing.");    
 });
