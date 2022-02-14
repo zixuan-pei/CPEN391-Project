@@ -16,8 +16,13 @@ const testData = {
     people: 10
 }
 
+app.get('/', (req, res) => {
+    res.send("Please add /addData or /getData after URL for testing.\n This is the dummy main page doing nothing.");    
+});
+
 app.get('/addData', (req, res) => {
-    db.getData().then(data => {
+    console.log(testData);
+    db.addData(testData).then(data => {
         console.log(data);
         res.send(data);
     }).catch(err => {
@@ -27,9 +32,8 @@ app.get('/addData', (req, res) => {
     
 });
 
-app.get('/', (req, res) => {
-    console.log(testData);
-    db.addData(testData).then(data => {
+app.post('/setData', (req, res) => {
+    db.addData(JSON.parse(req.body)).then(data => {
         console.log(data);
         res.send(data);
     }).catch(err => {
