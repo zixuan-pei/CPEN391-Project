@@ -33,7 +33,9 @@ app.get('/addData', (req, res) => {
 });
 
 app.post('/setData', (req, res) => {
-    db.addData(JSON.parse(req.body)).then(data => {
+    console.log("hahahahahahahahahahsfssfsafsafsafasfsdafdfasfasdfasfsafdsfsafsdafsafssdfsafah");
+    console.log(req.body);
+    db.addData(req.body).then(data => {
         console.log(data);
         res.send(data);
     }).catch(err => {
