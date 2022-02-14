@@ -23,19 +23,16 @@ app.get('/', (req, res) => {
 });
 
 app.get('/addData', (req, res) => {
-    console.log(testData);
     db.addData(testData).then(data => {
-        console.log(data);
         res.send(data);
     }).catch(err => {
-        console.log(err);
         res.send(err);
     });
     
 });
 
 app.post('/setData', (req, res) => {
-    console.log("hahahahahahahahahahsfssfsafsafsafasfsdafdfasfasdfasfsafdsfsafsdafsafssdfsafah");
+    console.log("Req body test : Please add /addData or /getData after URL for testing.\n This is the dummy main page doing nothing. Below is req.body:")
     console.log(req.body);
     db.addData(req.body).then(data => {
         console.log(data);
