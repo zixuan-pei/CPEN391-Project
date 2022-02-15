@@ -35,11 +35,11 @@ app.post('/setData', (req, res) => {
     console.log("Req body test : Please add /addData or /getData after URL for testing.\n This is the dummy main page doing nothing. Below is req.body:")
     console.log(req.body);
     // Only one object
-    // db.addData(req.body).then(data => {
-    //     res.send(data);
-    // }).catch(err => {
-    //     res.send(err);
-    // });
+    db.addData(req.body).then(data => {
+        res.send(data);
+    }).catch(err => {
+        res.send(err);
+    });
 
     // Array of Objects
 
