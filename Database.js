@@ -1,4 +1,5 @@
 const { MongoClient, ObjectID } = require('mongodb');	// require the mongodb driver
+const { v4: uuidv4 } = require('uuid');
 
 /**
  * Uses mongodb v3.6+ - [API Documentation](http://mongodb.github.io/node-mongodb-native/3.6/api/)
@@ -28,10 +29,35 @@ function Database(mongoUrl, dbName){
     );
 }
 
+Database.prototype.getDevices = function(){
+    return this.connected.then(db =>
+        new Promise((resolve, reject) => {
+            db.collection('devices').find({}).toArray((err, data) => {
+                if (err)
+                    reject(err);
+                else
+                    resolve(data);
+            })
+        })
+    )
+}
+
+Database.prototype.addDevice = function(device){
+    return this.connected.then(db =>
+        new Promise((resolve, reject) => {
+            let deviceWithId = {...device, _id: uuidv4()};
+            db.collection('devices').insertOne(deviceWithId, function (err) {
+                if (err) reject(err);
+                else resolve("Device added successfully!");
+            });
+        })
+    )
+}
+
 Database.prototype.getData = function(){
     return this.connected.then(db =>
         new Promise((resolve, reject) => {
-            db.collection('hello').find({}).toArray((err, data) => {
+            db.collection('data').find({}).toArray((err, data) => {
                 if (err)
                     reject(err);
                 else
@@ -44,9 +70,11 @@ Database.prototype.getData = function(){
 Database.prototype.addData = function(data){
     return this.connected.then(db =>
         new Promise((resolve, reject) => {
-            db.collection('hello').insertOne(data, function (err) {
+            // May change data id to time
+            let dataWithId = {...data, _id: uuidv4()};
+            db.collection('data').insertOne(dataWithId, function (err) {
                 if (err) reject(err);
-                else resolve(data);
+                else resolve('Data added successfully!');
             });
         })
     )
