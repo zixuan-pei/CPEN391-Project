@@ -1,7 +1,7 @@
 const express = require('express');
 const Database = require('../Database');
 const config = require('../config/default');
-const password = require('../config/password');
+// const password = require('../config/password');
 
 const mongodbPassword = process.env.MONGO_PASSWORD || password.dbPassword;
 const mongodbUrl = config.mongodbUrl_0 + mongodbPassword + config.mongodbUrl_1;

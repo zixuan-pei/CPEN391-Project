@@ -3,10 +3,11 @@ const Database = require('./Database');
 const deviceRoute = require('./APIs/devices');
 const dataRoute = require('./APIs/data');
 const config = require('./config/default');
-const password = require('./config/password');
+// const password = require('./config/password');
 
 const PORT = process.env.PORT || 3000;
 const mongodbPassword = process.env.MONGO_PASSWORD || password.dbPassword;
+// const mongodbPassword = process.env.MONGO_PASSWORD || password.dbPassword;
 const mongodbUrl = config.mongodbUrl_0 + mongodbPassword + config.mongodbUrl_1;
 const mongodbName = config.mongodbName;
 
