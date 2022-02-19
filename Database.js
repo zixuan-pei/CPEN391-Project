@@ -3,7 +3,7 @@ const config = require('./config/default');
 const { v4: uuidv4 } = require('uuid');
 
 
-const password = require('./config/password');          // Comment out this line when pushing to github
+// const password = require('./config/password');          // Comment out this line when pushing to github
 
 /**
  * Uses mongodb v3.6+ - [API Documentation](http://mongodb.github.io/node-mongodb-native/3.6/api/)
