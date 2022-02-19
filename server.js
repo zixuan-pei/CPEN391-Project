@@ -8,12 +8,15 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 let deleteOldData = () => {
-    db.deleteOldData(100)
+    // Delete data from 24 hours ago (24h = 86400000ms)
+    // db.deleteOldData(Date.now().valueOf() - 86400000)
+    // Test delete: 10min
+    db.deleteOldData(Date.now().valueOf() - 600000)
         .then(message => console.log(message))
         .catch(err => console.log(err));
 }
 
-// setInterval(deleteOldData, 10000);
+setInterval(deleteOldData, 100000);
 
 app.use(express.json());
 app.use('/devices', deviceRoute);
