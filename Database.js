@@ -106,7 +106,8 @@ Database.prototype.deleteOldData = function(time){
     )
 }
 
-const mongodbPassword = process.env.MONGO_PASSWORD || password.dbPassword;
+// const mongodbPassword = process.env.MONGO_PASSWORD || password.dbPassword;
+const mongodbPassword = process.env.MONGO_PASSWORD;
 const mongodbUrl = config.mongodbUrl_0 + mongodbPassword + config.mongodbUrl_1;
 const mongodbName = config.mongodbName;
 
