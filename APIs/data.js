@@ -1,14 +1,7 @@
 const express = require('express');
-const Database = require('../Database');
-const config = require('../config/default');
-// const password = require('../config/password');
-
-const mongodbPassword = process.env.MONGO_PASSWORD || password.dbPassword;
-const mongodbUrl = config.mongodbUrl_0 + mongodbPassword + config.mongodbUrl_1;
-const mongodbName = config.mongodbName;
+const db = require('../Database');
 
 const router = express.Router();
-const db = new Database(mongodbUrl, mongodbName);
 
 router.get('/', (req, res) => {
     db.getData().then(devices => {

@@ -1,18 +1,19 @@
 const express = require('express');
-const Database = require('./Database');
+const db = require('./Database');
 const deviceRoute = require('./APIs/devices');
 const dataRoute = require('./APIs/data');
-const config = require('./config/default');
-// const password = require('./config/password');
 
 const PORT = process.env.PORT || 3000;
-const mongodbPassword = process.env.MONGO_PASSWORD || password.dbPassword;
-// const mongodbPassword = process.env.MONGO_PASSWORD || password.dbPassword;
-const mongodbUrl = config.mongodbUrl_0 + mongodbPassword + config.mongodbUrl_1;
-const mongodbName = config.mongodbName;
 
 const app = express();
-const db = new Database(mongodbUrl, mongodbName);
+
+let deleteOldData = () => {
+    db.deleteOldData(100)
+        .then(message => console.log(message))
+        .catch(err => console.log(err));
+}
+
+// setInterval(deleteOldData, 10000);
 
 app.use(express.json());
 app.use('/devices', deviceRoute);

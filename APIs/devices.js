@@ -1,14 +1,7 @@
 const express = require('express');
-const Database = require('../Database');
-const config = require('../config/default');
-// const password = require('../config/password');
-
-const mongodbPassword = process.env.MONGO_PASSWORD || password.dbPassword;
-const mongodbUrl = config.mongodbUrl_0 + mongodbPassword + config.mongodbUrl_1;
-const mongodbName = config.mongodbName;
+const db = require('../Database');
 
 const router = express.Router();
-const db = new Database(mongodbUrl, mongodbName);
 
 router.get('/', (req, res) => {
     db.getDevices().then(devices => {
@@ -21,6 +14,26 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     db.addDevice(req.body).then(message => {
+        res.send(message);
+    }).catch(err => {
+        console.log(err);
+        res.send(err);
+    });
+});
+
+router.get('/:id', (req, res) => {
+    db.getDevices().then(devices => {
+        let id = req.params.id;
+        let device = devices.find(device => device._id === id);
+        res.send(device);
+    }).catch(err => {
+        console.log(err);
+        res.send(err);
+    });
+});
+
+router.delete('/:id', (req, res) => {
+    db.deleteDevice(req.params.id).then(message => {
         res.send(message);
     }).catch(err => {
         console.log(err);

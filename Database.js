@@ -1,5 +1,9 @@
 const { MongoClient, ObjectID } = require('mongodb');	// require the mongodb driver
+const config = require('./config/default');
 const { v4: uuidv4 } = require('uuid');
+
+
+const password = require('./config/password');          // Comment out this line when pushing to github
 
 /**
  * Uses mongodb v3.6+ - [API Documentation](http://mongodb.github.io/node-mongodb-native/3.6/api/)
@@ -54,6 +58,17 @@ Database.prototype.addDevice = function(device){
     )
 }
 
+Database.prototype.deleteDevice = function(id){
+    return this.connected.then(db =>
+        new Promise((resolve, reject) => {
+            db.collection('devices').deleteOne({_id: id}, function (err) {
+                if (err) reject(err);
+                else resolve("Device deleted successfully!");
+            });
+        })
+    )
+}
+
 Database.prototype.getData = function(){
     return this.connected.then(db =>
         new Promise((resolve, reject) => {
@@ -80,4 +95,21 @@ Database.prototype.addData = function(data){
     )
 }
 
-module.exports = Database;
+Database.prototype.deleteOldData = function(time){
+    return this.connected.then(db =>
+        new Promise((resolve, reject) => {
+            db.collection('data').remove({time: {$lt: time}}, function (err) {
+                if (err) reject(err);
+                else resolve("Old data deleted successfully!");
+            });
+        })
+    )
+}
+
+const mongodbPassword = process.env.MONGO_PASSWORD || password.dbPassword;
+const mongodbUrl = config.mongodbUrl_0 + mongodbPassword + config.mongodbUrl_1;
+const mongodbName = config.mongodbName;
+
+const db = new Database(mongodbUrl, mongodbName);
+
+module.exports = db;
