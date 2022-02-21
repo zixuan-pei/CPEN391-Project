@@ -69,10 +69,10 @@ Database.prototype.deleteDevice = function(id){
     )
 }
 
-Database.prototype.getData = function(){
+Database.prototype.getData = function(deviceId) {
     return this.connected.then(db =>
         new Promise((resolve, reject) => {
-            db.collection('data').find({}).toArray((err, data) => {
+            db.collection(deviceId).find({}).toArray((err, data) => {
                 if (err)
                     reject(err);
                 else
@@ -82,12 +82,11 @@ Database.prototype.getData = function(){
     )
 }
 
-Database.prototype.addData = function(data){
+Database.prototype.addData = function(deviceId, data) {
     return this.connected.then(db =>
         new Promise((resolve, reject) => {
-            // May change data id to time
             let dataWithId = {...data, _id: uuidv4()};
-            db.collection('data').insertOne(dataWithId, function (err) {
+            db.collection(deviceId).insertOne(dataWithId, function (err) {
                 if (err) reject(err);
                 else resolve('Data added successfully!');
             });
@@ -106,11 +105,13 @@ Database.prototype.deleteOldData = function(time){
     )
 }
 
-// const mongodbPassword = process.env.MONGO_PASSWORD || password.dbPassword;
-const mongodbPassword = process.env.MONGO_PASSWORD;
+const mongodbPassword = process.env.MONGO_PASSWORD || password.dbPassword;
+// const mongodbPassword = process.env.MONGO_PASSWORD;
 const mongodbUrl = config.mongodbUrl_0 + mongodbPassword + config.mongodbUrl_1;
-const mongodbName = config.mongodbName;
+const mongodbName_data = config.mongodbName_data;
+const mongodbName_device = config.mongodbName_device;
 
-const db = new Database(mongodbUrl, mongodbName);
+const db_data = new Database(mongodbUrl, mongodbName_data);
+const db_device = new Database(mongodbUrl, mongodbName_device);
 
-module.exports = db;
+module.exports = {db_data, db_device};

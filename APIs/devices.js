@@ -1,10 +1,10 @@
 const express = require('express');
-const db = require('../Database');
+const {db_data, db_device} = require('../Database');
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    db.getDevices().then(devices => {
+    db_device.getDevices().then(devices => {
         res.send(devices);
     }).catch(err => {
         console.log(err);
@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    db.addDevice(req.body).then(message => {
+    db_device.addDevice(req.body).then(message => {
         res.send(message);
     }).catch(err => {
         console.log(err);
@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-    db.getDevices().then(devices => {
+    db_device.getDevices().then(devices => {
         let id = req.params.id;
         let device = devices.find(device => device._id === id);
         res.send(device);
@@ -33,7 +33,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-    db.deleteDevice(req.params.id).then(message => {
+    db_device.deleteDevice(req.params.id).then(message => {
         res.send(message);
     }).catch(err => {
         console.log(err);

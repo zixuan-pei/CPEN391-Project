@@ -1,5 +1,5 @@
 const express = require('express');
-const db = require('./Database');
+const {db_data, db_device} = require('./Database');
 const deviceRoute = require('./APIs/devices');
 const dataRoute = require('./APIs/data');
 
@@ -7,16 +7,18 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
-let deleteOldData = () => {
-    // Delete data from 24 hours ago (24h = 86400000ms)
-    // db.deleteOldData(Date.now().valueOf() - 86400000)
-    // Test delete: 10min
-    db.deleteOldData(Date.now().valueOf() - 600000)
-        .then(message => console.log(message))
-        .catch(err => console.log(err));
-}
+console.log(db_data);
 
-setInterval(deleteOldData, 100000);
+// let deleteOldData = () => {
+//     // Delete data from 24 hours ago (24h = 86400000ms)
+//     // db.deleteOldData(Date.now().valueOf() - 86400000)
+//     // Test delete: 10min
+//     db.deleteOldData(Date.now().valueOf() - 600000)
+//         .then(message => console.log(message))
+//         .catch(err => console.log(err));
+// }
+
+// setInterval(deleteOldData, 100000);
 
 app.use(express.json());
 app.use('/devices', deviceRoute);

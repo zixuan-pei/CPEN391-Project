@@ -1,25 +1,39 @@
 const express = require('express');
-const db = require('../Database');
+const {db_data, db_device} = require('../Database');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    db.getData().then(devices => {
-        res.send(devices);
+router.get('/:id', (req, res) => {    
+    let id = req.params.id;
+    db_data.getData(id).then(data => {
+        res.send(data);
     }).catch(err => {
         console.log(err);
         res.send(err);
     });
 });
 
-router.post('/', (req, res) => {
-    db.addData(req.body).then(message => {
+router.post('/:id', (req, res) => {
+    let id = req.params.id;
+    db_data.addData(id, req.body).then(message => {
         res.send(message);
     }).catch(err => {
         console.log(err);
         res.send(err);
     });
 });
+
+// router.get('/:id', (req, res) => {
+//     let id = req.params.id;
+//     db_data.addData(id).then(devices => {
+//         let id = req.params.id;
+//         let device = devices.find(device => device._id === id);
+//         res.send(device);
+//     }).catch(err => {
+//         console.log(err);
+//         res.send(err);
+//     });
+// });
 
 router.put('/', (req, res) => {
 
