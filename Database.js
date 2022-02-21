@@ -2,8 +2,10 @@ const { MongoClient, ObjectID } = require('mongodb');	// require the mongodb dri
 const config = require('./config/default');
 const { v4: uuidv4 } = require('uuid');
 
-
-// const password = require('./config/password');          // Comment out this line when pushing to github
+const mongodbPassword = process.env.MONGO_PASSWORD || require('./config/password').dbPassword;
+const mongodbUrl = config.mongodbUrl_0 + mongodbPassword + config.mongodbUrl_1;
+const mongodbName_data = config.mongodbName_data;
+const mongodbName_device = config.mongodbName_device;
 
 /**
  * Uses mongodb v3.6+ - [API Documentation](http://mongodb.github.io/node-mongodb-native/3.6/api/)
@@ -105,11 +107,6 @@ Database.prototype.deleteOldData = function(time){
     )
 }
 
-const mongodbPassword = process.env.MONGO_PASSWORD || password.dbPassword;
-// const mongodbPassword = process.env.MONGO_PASSWORD;
-const mongodbUrl = config.mongodbUrl_0 + mongodbPassword + config.mongodbUrl_1;
-const mongodbName_data = config.mongodbName_data;
-const mongodbName_device = config.mongodbName_device;
 
 const db_data = new Database(mongodbUrl, mongodbName_data);
 const db_device = new Database(mongodbUrl, mongodbName_device);
