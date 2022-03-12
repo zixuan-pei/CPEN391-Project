@@ -13,7 +13,7 @@ console.log(db_data);
 //     // Delete data from 24 hours ago (24h = 86400000ms)
 //     // db.deleteOldData(Date.now().valueOf() - 86400000)
 //     // Test delete: 10min
-//     db.deleteOldData(Date.now().valueOf() - 600000)
+//     db_data.deleteOldData(Date.now().valueOf() - 600000)
 //         .then(message => console.log(message))
 //         .catch(err => console.log(err));
 // }

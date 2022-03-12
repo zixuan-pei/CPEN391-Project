@@ -96,6 +96,7 @@ Database.prototype.addData = function(deviceId, data) {
     )
 }
 
+// TODO: clear all old data in all collections
 Database.prototype.deleteOldData = function(time){
     return this.connected.then(db =>
         new Promise((resolve, reject) => {

@@ -15,7 +15,8 @@ router.get('/:id', (req, res) => {
 
 router.post('/:id', (req, res) => {
     let id = req.params.id;
-    db_data.addData(id, req.body).then(message => {
+    let dataWithTime = {"time": Date.now(), ...req.body};
+    db_data.addData(id, dataWithTime).then(message => {
         res.send(message);
     }).catch(err => {
         console.log(err);
