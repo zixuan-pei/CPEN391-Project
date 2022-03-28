@@ -51,7 +51,7 @@ Database.prototype.getDevices = function(){
 Database.prototype.addDevice = function(device){
     return this.connected.then(db =>
         new Promise((resolve, reject) => {
-            let deviceWithId = {...device, _id: uuidv4()};
+            let deviceWithId = {"name": device, _id: uuidv4()};
             db.collection('devices').insertOne(deviceWithId, function (err) {
                 if (err) reject(err);
                 else resolve("Device added successfully!");
@@ -63,7 +63,7 @@ Database.prototype.addDevice = function(device){
 Database.prototype.deleteDevice = function(id){
     return this.connected.then(db =>
         new Promise((resolve, reject) => {
-            db.collection('devices').deleteOne({_id: id}, function (err) {
+            db.collection('devices').deleteOne({"name": id}, function (err) {
                 if (err) reject(err);
                 else resolve("Device deleted successfully!");
             });
@@ -97,15 +97,15 @@ Database.prototype.addData = function(deviceId, data) {
 }
 
 // TODO: clear all old data in all collections
-Database.prototype.deleteOldData = function(time){
+Database.prototype.deleteOldData = function(device, time){
     return this.connected.then(db =>
         new Promise((resolve, reject) => {
-            db.collection('data').remove({time: {$lt: time}}, function (err) {
-                if (err) reject(err);
-                else resolve("Old data deleted successfully!");
-            });
-        })
-    )
+            db.collection(device).remove({time: {$lt: time}}, function (err) {
+                    if (err) reject(err);
+                    else resolve("Old data deleted successfully!");
+                });
+            })
+        );
 }
 
 

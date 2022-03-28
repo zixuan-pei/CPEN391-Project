@@ -12,8 +12,10 @@ router.get('/', (req, res) => {
     });
 });
 
-router.post('/', (req, res) => {
-    db_device.addDevice(req.body).then(message => {
+router.post('/:id', (req, res) => {
+    let id = req.params.id;
+    console.log(id);
+    db_device.addDevice(id).then(message => {
         res.send(message);
     }).catch(err => {
         console.log(err);
