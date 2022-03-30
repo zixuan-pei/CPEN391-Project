@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
+let image;
 
 console.log(db_data);
 
@@ -26,12 +27,24 @@ let deleteOldData = () => {
 // Test delete interval: 1 min
 setInterval(deleteOldData, 60000);
 
-app.use(express.json());
+// app.use(express.json());
+app.use(express.json({limit:'50mb'}))
 app.use('/devices', deviceRoute);
 app.use('/data', dataRoute);
 
 app.get('/', (req, res) => {
     res.send("Please add /devices or /data after URL for testing.\n This is the dummy main page doing nothing.");    
+});
+
+app.post('/image', (req, res) => {
+    image = req.body;
+    console.log(image);
+
+    res.send("Hi");
+});
+
+app.get('/image', (req, res) => {
+    res.send(image);
 });
 
 app.listen(PORT, () => {
