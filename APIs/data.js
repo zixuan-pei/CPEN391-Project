@@ -3,6 +3,22 @@ const {db_data, db_device} = require('../Database');
 
 const router = express.Router();
 
+let co2 = 0;
+let people = 0;
+
+let device = "device1"
+
+let add_data = function () {
+    let dataWithTime = {
+        "time": Date.now(),
+        "co2": co2,
+        "people": people
+    }
+    db_data.addData(device, dataWithTime)
+}
+
+setInterval(add_data, 60000);
+
 router.get('/:id', (req, res) => {    
     let id = req.params.id;
     db_data.getData(id).then(data => {
@@ -13,19 +29,17 @@ router.get('/:id', (req, res) => {
     });
 });
 
-router.post('/:id', (req, res) => {
+// TODO: think about how to support multiple devices
+router.post('/:id/:type', (req, res) => {
     let id = req.params.id;
-    let dataWithTime;
-    if(req.body.time)
-        dataWithTime = req.body;
-    else
-        dataWithTime = {"time": Date.now(), ...req.body};
-    db_data.addData(id, dataWithTime).then(message => {
-        res.send(message);
-    }).catch(err => {
-        console.log(err);
-        res.send(err);
-    });
+    let type = req.params.type;
+    if(type === 'co2')
+        co2 = req.body.co2;
+    else if(type === 'people')
+        people = req.body.people;
+
+    res.send("OK");
+    
 });
 
 // router.get('/:id', (req, res) => {
