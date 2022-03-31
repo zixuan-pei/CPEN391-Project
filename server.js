@@ -3,7 +3,7 @@ const {db_data, db_device} = require('./Database');
 const deviceRoute = require('./APIs/devices');
 const dataRoute = require('./APIs/data');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 
 const app = express();
 
@@ -17,7 +17,7 @@ let deleteOldData = () => {
     // Test delete: 10min
     db_device.getDevices().then(devices => {
         devices.forEach(device => {
-            db_data.deleteOldData(device.name, Date.now().valueOf() - 600000)
+            db_data.deleteOldData(device.name, Date.now().valueOf() - 43200000)
                 .then(message => console.log(message))
                 .catch(err => console.log(err));
         })
