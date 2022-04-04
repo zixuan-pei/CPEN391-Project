@@ -38,8 +38,6 @@ app.get('/', (req, res) => {
 
 app.post('/image', (req, res) => {
     image = req.body;
-    console.log(image);
-
     res.send("Hi");
 });
 
