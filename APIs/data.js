@@ -8,10 +8,12 @@ let people = 0;
 
 let devices = {
     "device1": {
+        "time": 123,
         "co2": 0, 
         "people": 0
     },
     "device2": {
+        "time": 456,
         "co2": 0, 
         "people": 0
     }
@@ -19,9 +21,8 @@ let devices = {
 
 let add_data = function () {
     Object.keys(devices).forEach(device => {
-        console.log({"time": Date.now(), ...devices[device]})
         if (devices[device].co2 !== 0)
-            db_data.addData(device, {"time": Date.now(), ...devices[device]})
+            db_data.addData(device, devices[device])
     })
 }
 
@@ -43,14 +44,15 @@ router.post('/:id/:type', (req, res) => {
     let type = req.params.type;
     if(type === 'co2') {
         devices[id].co2 = req.body.co2;
+        devices[id].time = Date.now();
         co2 = req.body.co2;
     } else if(type === 'people') {
         devices[id].people = req.body.people;
+        devices[id].time = Date.now();
         people = req.body.people;
     }
 
-    res.send("OK");
-    
+    res.send("OK");     
 });
 
 router.get('/:id/new', (req, res) => {
