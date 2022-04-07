@@ -26,7 +26,7 @@ let add_data = function () {
     })
 }
 
-setInterval(add_data, 6000);
+setInterval(add_data, 60000);
 
 router.get('/:id', (req, res) => {    
     let id = req.params.id;
